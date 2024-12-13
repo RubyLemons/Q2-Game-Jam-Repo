@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: d3190846d8a72cf4c897c56f8094e985
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - freelook: {instanceID: 0}
+  - camAnimated: {instanceID: 0}
+  - camShake: {instanceID: 0}
+  - ammoRapper: {instanceID: 0}
+  - ammoImg: {fileID: 7618364910306555324, guid: 222061f33c2731a4a8213290d6b0ea86,
+      type: 3}
+  - bulletScar: {fileID: 900995251766434998, guid: 82e3fe8d44c2c094ca3ddfa75887a363,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
