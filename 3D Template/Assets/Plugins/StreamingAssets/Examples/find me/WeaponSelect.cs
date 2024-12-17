@@ -91,7 +91,7 @@ public class WeaponSelect : MonoBehaviour
                 Viewmodel.show = true;
 
                 deb = false;
-            }, 250));
+            }, 500));
 
             thisCollectable.SetActive(true);
         }
