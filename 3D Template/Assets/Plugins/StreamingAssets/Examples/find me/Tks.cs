@@ -43,6 +43,11 @@ public class Tks
         [Space(10)]
 
         public Animator animator;
+        public string shake = "shake";
+        public string[] reload = new string[2];
+
+        public float pullBack;
+        [Range(0, 1)] public float pullBackSmooth = 0.05f;
 
         [Header("Fire")]
 
@@ -97,7 +102,7 @@ public class Tks
         return result;
     }
 
-    //Changed listener (once only)
+    //Changed listener
 
     static Dictionary<string, float> current = new Dictionary<string, float>();
     static Dictionary<string, float> late = new Dictionary<string, float>();

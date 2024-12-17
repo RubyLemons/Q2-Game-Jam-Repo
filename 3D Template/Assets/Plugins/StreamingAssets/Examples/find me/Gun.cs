@@ -6,6 +6,7 @@ public class Gun : MonoBehaviour
 {
     
     [SerializeField] Freelook freelook;
+    [SerializeField] Transform viewmodel;
 
     [SerializeField] Transform camAnimated;
     [SerializeField] Animator camShake;
@@ -80,6 +81,7 @@ public class Gun : MonoBehaviour
 
         //cam animated recoil
         camAnimated.localRotation = Quaternion.Lerp(camAnimated.localRotation, Quaternion.identity, WeaponSelect.equipped.recoilSmooth);
+        viewmodel.localPosition = Vector3.Lerp(viewmodel.localPosition, Vector3.zero, WeaponSelect.equipped.pullBackSmooth);
     }
 
     public void Fire()
@@ -87,11 +89,12 @@ public class Gun : MonoBehaviour
         //aniamte
 
         WeaponSelect.equipped.animator.Play("fire", 0, 0.0f);
-        camShake.Play("shake", 0, 0.0f);
+        camShake.Play(WeaponSelect.equipped.shake, 0, 0.0f);
 
         WeaponSelect.equipped.ammo -= 1;
 
         camAnimated.transform.localRotation *= Quaternion.Euler(Vector3.left * WeaponSelect.equipped.recoil / WeaponSelect.equipped.bullets);
+        viewmodel.localPosition += (Vector3.forward * -Mathf.Abs(WeaponSelect.equipped.pullBack));
 
 
         //Raycast
@@ -136,7 +139,7 @@ public class Gun : MonoBehaviour
         if (reloadDeb || reloadAction || fireAction || ammoFull) return;
         reloadDeb = true;
 
-        WeaponSelect.equipped.animator.Play("reload");
+        WeaponSelect.equipped.animator.Play(!ammoEmpty ? WeaponSelect.equipped.reload[0] : WeaponSelect.equipped.reload[1]);
 
         float sleep = WeaponSelect.equipped.reloadTime * 1000;
 

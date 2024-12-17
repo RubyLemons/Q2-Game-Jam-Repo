@@ -18,6 +18,8 @@ public class WeaponSelect : MonoBehaviour
 
     [Header("Gui")]
 
+    [SerializeField] Transform wheelRapper;
+
     public static bool wheelEnabled = false;
 
     float wheelAlpha;
@@ -26,7 +28,7 @@ public class WeaponSelect : MonoBehaviour
 
     [SerializeField] CanvasGroup canvasGroup;
 
-    [Header("Animte")]
+    [Header("Animate")]
 
     [SerializeField] float dur = 0.25f;
 
@@ -34,7 +36,7 @@ public class WeaponSelect : MonoBehaviour
     {
         equipped = collectable[index];
 
-        transform.localScale = Vector3.zero;
+        wheelRapper.localScale = Vector3.zero;
         canvasGroup.alpha = 1;
 
         ValidSlot();
@@ -116,9 +118,9 @@ public class WeaponSelect : MonoBehaviour
 
     void GetBtns()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < wheelRapper.childCount; i++)
         {
-            Transform thisSlot = transform.GetChild(i).GetChild(0);
+            Transform thisSlot = wheelRapper.GetChild(i).GetChild(0);
             BtnContainer btnEvent = thisSlot.GetComponent<BtnContainer>();
 
             Image ico = thisSlot.GetChild(0).GetChild(0).GetComponent<Image>();
@@ -152,10 +154,10 @@ public class WeaponSelect : MonoBehaviour
         Tks.freelook = !wheelEnabled;
         Tks.freeroam = !wheelEnabled;
 
-        LeanTween.cancel(gameObject);
-        transform.localScale = (!wheelEnabled) ? Vector3.one * 2 : Vector3.zero;
+        LeanTween.cancel(wheelRapper.gameObject);
+        wheelRapper.localScale = (!wheelEnabled) ? Vector3.one * 2 : Vector3.zero;
 
-        LeanTween.scale(gameObject, (wheelEnabled) ? Vector3.one * 2 : Vector3.zero, wheelEnabled ? dur : dur / 0.75f)
+        LeanTween.scale(wheelRapper.gameObject, (wheelEnabled) ? Vector3.one * 2 : Vector3.zero, wheelEnabled ? dur : dur / 0.75f)
             .setEase(wheelEnabled ? LeanTweenType.easeInOutCubic : LeanTweenType.easeInCubic);
 
         wheelAlpha = (wheelEnabled) ? 1 : 0;
