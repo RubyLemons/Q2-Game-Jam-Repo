@@ -37,7 +37,7 @@ public class Btn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     Color targetColorLabel;
 
 
-    [SerializeField] Vector3[] scale = new Vector3[2];
+    [SerializeField] Vector2[] scale = new Vector2[2];
     Vector3 targetScale;
 
     [Range(0, 1)] [SerializeField] float smooth = 1;
@@ -57,10 +57,17 @@ public class Btn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         targetColor = color[0];
         targetColorLabel = colorLabel[0];
+        targetScale = scale[0];
     }
 
     protected virtual void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+            btnEvent.Invoke();
+
+
+        //Animate
+
         if (!animate) return;
         img.color = Color.Lerp(img.color, targetColor, smooth);
         img.transform.localScale = Vector3.Lerp(img.transform.localScale, targetScale, smooth);
@@ -73,6 +80,8 @@ public class Btn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public virtual void OnPointerEnter(PointerEventData e)
     {
         enter = true;
+
+        label.text = hoverText;
 
         if (!animate) return;
 
@@ -87,6 +96,8 @@ public class Btn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         enter = false;
 
+        label.text = initialText;
+
         if (!animate) return;
 
         targetColor = color[0];
@@ -94,10 +105,5 @@ public class Btn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         if (label == null) return;
         targetColorLabel = colorLabel[0];
-    }
-
-    public virtual void OnPointerDown(PointerEventData e)
-    {
-        btnEvent.Invoke();
     }
 }

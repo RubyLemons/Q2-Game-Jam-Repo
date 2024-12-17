@@ -6214,7 +6214,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Close
+  m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3c3a64380a8826148aeae0c9c6642fb0, type: 2}
   m_sharedMaterial: {fileID: -693604285203238795, guid: 3c3a64380a8826148aeae0c9c6642fb0,
@@ -8653,17 +8653,17 @@ MonoBehaviour:
   img: {fileID: 0}
   label: {fileID: 0}
   animate: 1
-  hoverText: Close application
+  hoverText: Exit application
   color:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
+  - {r: 0, g: 0.5019608, b: 1, a: 1}
   colorLabel:
   - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   scale:
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  smooth: 1
+  - {x: 1, y: 1}
+  - {x: 1.25, y: 1.25}
+  smooth: 0.5
 --- !u!1 &1014253077
 GameObject:
   m_ObjectHideFlags: 0
@@ -14353,17 +14353,17 @@ MonoBehaviour:
   img: {fileID: 0}
   label: {fileID: 0}
   animate: 1
-  hoverText: 
+  hoverText: Restart wave
   color:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
+  - {r: 0, g: 0.5019608, b: 1, a: 1}
   colorLabel:
   - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   scale:
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  smooth: 1
+  - {x: 1, y: 1}
+  - {x: 1.25, y: 1.25}
+  smooth: 0.5
 --- !u!1 &1192223105
 GameObject:
   m_ObjectHideFlags: 0
@@ -15786,6 +15786,7 @@ GameObject:
   - component: {fileID: 1531399680}
   - component: {fileID: 1531399679}
   - component: {fileID: 1531399678}
+  - component: {fileID: 1531399681}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -15865,6 +15866,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6b9e6e4b2507f44aff3792ba3ab62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  header: {fileID: 1758964846}
+  innerText:
+  - Paused
+  - You died
+--- !u!225 &1531399681
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531399676}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1539337937
 GameObject:
   m_ObjectHideFlags: 0
@@ -16491,7 +16508,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PAUSED
+  m_text: Paused
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3c3a64380a8826148aeae0c9c6642fb0, type: 2}
   m_sharedMaterial: {fileID: -693604285203238795, guid: 3c3a64380a8826148aeae0c9c6642fb0,
@@ -16525,7 +16542,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -17270,17 +17287,17 @@ MonoBehaviour:
   img: {fileID: 0}
   label: {fileID: 0}
   animate: 1
-  hoverText: 
+  hoverText: Continue wave
   color:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
+  - {r: 0, g: 0.5019608, b: 1, a: 1}
   colorLabel:
   - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   scale:
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: 1}
-  smooth: 1
+  - {x: 1, y: 1}
+  - {x: 1.25, y: 1.25}
+  smooth: 0.5
 --- !u!1 &1962903427
 GameObject:
   m_ObjectHideFlags: 0
