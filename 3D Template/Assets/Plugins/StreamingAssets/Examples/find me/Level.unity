@@ -5817,6 +5817,7 @@ GameObject:
   m_Component:
   - component: {fileID: 312264085}
   - component: {fileID: 312264086}
+  - component: {fileID: 312264087}
   m_Layer: 5
   m_Name: Btn rapper
   m_TagString: Untagged
@@ -5873,6 +5874,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &312264087
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312264084}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &322732869
 GameObject:
   m_ObjectHideFlags: 0
@@ -8638,10 +8651,10 @@ MonoBehaviour:
   btnEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 392718983}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1531399680}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp-firstpass
+        m_MethodName: Exit
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8656,7 +8669,7 @@ MonoBehaviour:
   hoverText: Exit application
   color:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0, g: 0.5019608, b: 1, a: 1}
+  - {r: 1, g: 0, b: 0.2, a: 1}
   colorLabel:
   - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
@@ -8959,7 +8972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1097624935
 Transform:
   m_ObjectHideFlags: 0
@@ -14338,10 +14351,10 @@ MonoBehaviour:
   btnEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 390990176}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1531399680}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp-firstpass
+        m_MethodName: Restart
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -14353,10 +14366,10 @@ MonoBehaviour:
   img: {fileID: 0}
   label: {fileID: 0}
   animate: 1
-  hoverText: Restart wave
+  hoverText: Restart to begging
   color:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0, g: 0.5019608, b: 1, a: 1}
+  - {r: 0, g: 0.5686275, b: 1, a: 1}
   colorLabel:
   - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
@@ -15866,10 +15879,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6b9e6e4b2507f44aff3792ba3ab62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 1524256009}
   header: {fileID: 1758964846}
   innerText:
   - Paused
   - You died
+  group: {fileID: 1531399681}
+  backdropColor:
+  - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 0.6117647}
+  - {r: 0.24528301, g: 0.061320752, b: 0.08637404, a: 1}
+  btnRapper: {fileID: 312264087}
+  pop: 17.5
+  dur: 0.45
 --- !u!225 &1531399681
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -15880,7 +15901,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &1539337937
 GameObject:
@@ -17272,10 +17293,10 @@ MonoBehaviour:
   btnEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1461771779}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1531399680}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp-firstpass
+        m_MethodName: Continue
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -17290,7 +17311,7 @@ MonoBehaviour:
   hoverText: Continue wave
   color:
   - {r: 1, g: 1, b: 1, a: 1}
-  - {r: 0, g: 0.5019608, b: 1, a: 1}
+  - {r: 0, g: 0.5686275, b: 1, a: 1}
   colorLabel:
   - {r: 0.07058824, g: 0.07058824, b: 0.12941177, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
@@ -18378,7 +18399,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374783977091000676}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -18642,7 +18663,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9154999596189543994}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -18794,7 +18815,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2879245941279770845}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -19263,7 +19284,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3793331199289897280}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -19333,7 +19354,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4088837360946589877}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -19756,7 +19777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &3592954382829213553
 GameObject:
   m_ObjectHideFlags: 0
@@ -20044,7 +20065,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6169734081205002439}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -20583,7 +20604,7 @@ SkinnedMeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6681777007726943444}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -20815,7 +20836,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3986105423826931431}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -20857,7 +20878,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9125528425139063410}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -21048,7 +21069,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1220568922490566762}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -21308,7 +21329,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8154717820779947458}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -22511,7 +22532,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7557489848379734142}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0

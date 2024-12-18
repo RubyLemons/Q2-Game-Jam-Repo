@@ -10,6 +10,8 @@ public class Freeroam : MonoBehaviour
     [SerializeField] Freelook freelook;
     [SerializeField] Transform camAnimated;
 
+    public static bool freeroam;
+
     [Space(10)]
 
     [SerializeField] Combo comboBar;
@@ -69,6 +71,8 @@ public class Freeroam : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale < 1) return;
+
         //Move
 
         Vector3 move = MoveInput() + Gravity();
@@ -81,7 +85,7 @@ public class Freeroam : MonoBehaviour
         RaycastHit hit;
         ground = Physics.BoxCast(transform.position, new Vector3(controller.radius - 0.1f, controller.radius / 2, controller.radius - 0.1f), Vector3.down, out hit, Quaternion.identity, controller.height / 2);
 
-        if (Input.GetKeyDown(KeyCode.Space) && ground && Tks.freeroam && !slideDeb)
+        if (Input.GetKeyDown(KeyCode.Space) && ground && freeroam && !slideDeb)
             velo = jumpHeight;
 
         //Fast
@@ -103,7 +107,7 @@ public class Freeroam : MonoBehaviour
         Vector3 direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveInput = Vector3.Lerp(moveInput, Vector3.Normalize(direction), smooth);
 
-        moving = (direction.magnitude > 0) && Tks.freeroam;
+        moving = (direction.magnitude > 0) && freeroam;
         backwards = (direction.y < 0);
 
 
@@ -118,7 +122,7 @@ public class Freeroam : MonoBehaviour
         
         Vector3 slideMovement = (slideDeb) ? (slideDir * slideForce) : Vector3.zero;
 
-        return Tks.freeroam ? (top + left) + slideMovement : Vector3.zero;
+        return freeroam ? (top + left) + slideMovement : Vector3.zero;
     }
 
     void SlideInput()

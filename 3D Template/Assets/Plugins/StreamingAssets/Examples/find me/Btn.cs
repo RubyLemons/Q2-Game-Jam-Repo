@@ -26,7 +26,7 @@ public class Btn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] bool animate;
 
     string initialText;
-    [SerializeField] string hoverText;
+    public string hoverText;
 
     [Space(10)]
 
@@ -62,7 +62,7 @@ public class Btn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     protected virtual void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && enter)
             btnEvent.Invoke();
 
 

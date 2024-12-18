@@ -49,6 +49,9 @@ public class BarController : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (Time.timeScale < 1) return;
+
+
         value = Mathf.Clamp01(value);
 
         idleTime = (hide) ? idleTime + Time.deltaTime : 0;

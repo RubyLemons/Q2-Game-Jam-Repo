@@ -45,6 +45,8 @@ public class WeaponSelect : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale < 1) return;
+
         equipped = collectable[index];
 
         if (Input.GetKeyDown(KeyCode.Mouse2))
@@ -90,10 +92,11 @@ public class WeaponSelect : MonoBehaviour
             StartCoroutine(Tks.SetTimeout(() => {
                 Viewmodel.show = true;
 
-                deb = false;
-            }, 500));
+                thisCollectable.SetActive(true);
 
-            thisCollectable.SetActive(true);
+                deb = false;
+            }, 100));
+
         }
     }
 
@@ -151,8 +154,8 @@ public class WeaponSelect : MonoBehaviour
 
         Tks.cursorState = (wheelEnabled) ? CursorLockMode.None : CursorLockMode.Locked;
 
-        Tks.freelook = !wheelEnabled;
-        Tks.freeroam = !wheelEnabled;
+        Freelook.freelook = !wheelEnabled;
+        Freeroam.freeroam = !wheelEnabled;
 
         LeanTween.cancel(wheelRapper.gameObject);
         wheelRapper.localScale = (!wheelEnabled) ? Vector3.one * 2 : Vector3.zero;

@@ -20,7 +20,7 @@ public class Viewmodel : MonoBehaviour
 
     void Update()
     {
-        if (!Tks.freelook) return;
+        if (!Freelook.freelook) return;
 
         sway = new Vector2(Input.GetAxis("Mouse X") * sens * (freelook.maxLook ? 0 : 1), Input.GetAxis("Mouse Y") * sens * (freelook.maxLook ? 0 : 1)) * Time.deltaTime;
 
@@ -28,7 +28,7 @@ public class Viewmodel : MonoBehaviour
 
         //Animate vm show
 
-        Vector3 showPose = (show) ? Vector3.zero : Vector3.one * -5;
-        transform.parent.localPosition = Vector3.Lerp(transform.parent.localPosition, showPose, (show) ? 0.25f : 1);
+        Vector3 showPose = (show) ? Vector3.zero : Vector3.forward * -2.5f;
+        transform.parent.localPosition = Vector3.Lerp(transform.parent.localPosition, showPose, (show) ? 0.175f : 1);
     }
 }

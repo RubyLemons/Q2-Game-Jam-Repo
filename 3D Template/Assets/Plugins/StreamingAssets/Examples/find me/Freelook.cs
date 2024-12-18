@@ -7,6 +7,8 @@ public class Freelook : MonoBehaviour
     public Camera cam;
     public static Camera camStatic;
 
+    public static bool freelook;
+
     [SerializeField] Transform[] animatedCams;
 
     [HideInInspector] public Vector2 mouseDelta;
@@ -25,7 +27,7 @@ public class Freelook : MonoBehaviour
 
     void Update()
     {
-        if (!Tks.freelook) return;
+        if (!freelook) return;
 
         maxLook = (mouseDelta.y == -angleLimit + angleOffset || mouseDelta.y + angleOffset == angleLimit);
 

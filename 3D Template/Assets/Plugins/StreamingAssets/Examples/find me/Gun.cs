@@ -40,7 +40,7 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (WeaponSelect.wheelEnabled) return;
+        if (WeaponSelect.wheelEnabled || Time.timeScale < 1) return;
 
         //ammo clamp
         WeaponSelect.equipped.ammo = Mathf.Clamp(WeaponSelect.equipped.ammo, 0, WeaponSelect.equipped.ammoLimit);

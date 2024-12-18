@@ -6,13 +6,6 @@ using UnityEngine.UI;
 public class Tks
 {
 
-    //PLAYER
-
-    public static bool freelook = true; //COMEBACK
-    public static bool freeroam = true;
-
-    //
-
     public static CursorLockMode cursorState = CursorLockMode.Locked;
 
     public static IEnumerator SetTimeout(System.Action action, float delay, bool realTime = false)
