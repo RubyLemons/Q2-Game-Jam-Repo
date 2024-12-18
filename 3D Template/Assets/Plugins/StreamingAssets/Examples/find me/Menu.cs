@@ -70,7 +70,7 @@ public class Menu : MonoBehaviour
 
         Time.timeScale = (!paused) ? 1.0f : 0.0f;
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace)) {
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Backspace)) && !WeaponSelect.wheelEnabled) {
             paused = !paused;
             UpdateValues();
         }
