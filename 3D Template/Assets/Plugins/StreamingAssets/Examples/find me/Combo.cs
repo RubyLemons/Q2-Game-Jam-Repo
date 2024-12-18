@@ -44,10 +44,6 @@ public class Combo : BarController
                 label.transform.localRotation = Quaternion.Euler(label.transform.localRotation.eulerAngles + Vector3.forward * (pop * 10 * Tks.GetRandomSign()));
             }
         }, value, "Combo");
-
-        //debug
-        if (Input.GetKeyDown(KeyCode.F))
-            value += 0.01f;
     }
 
     protected override void AnimateGui()

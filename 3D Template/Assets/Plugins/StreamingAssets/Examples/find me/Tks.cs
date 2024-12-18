@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,9 +66,9 @@ public class Tks
     }
 
     //run everyframe
-    static Dictionary<Image, bool> flickerDebFlags = new Dictionary<Image, bool>();
+    static Dictionary<GameObject, bool> flickerDebFlags = new Dictionary<GameObject, bool>();
 
-    public static IEnumerator FlickerImg(Image img, float timeout = 50)
+    public static IEnumerator FlickerImg(GameObject img, float timeout = 50)
     {
         if (!flickerDebFlags.ContainsKey(img))
             flickerDebFlags.Add(img, false);

@@ -39,10 +39,6 @@ public class Health : BarController
         }, value, "Health");
 
         AnimateGui();
-
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.H))
-            value -= 0.1f;
     }
 
     protected override void AnimateGui()
@@ -57,7 +53,7 @@ public class Health : BarController
 
         //backdrop
         if (value < 0.375f)
-            StartCoroutine(Tks.FlickerImg(backdrop, 100));
+            StartCoroutine(Tks.FlickerImg(backdrop.gameObject, 100));
 
         //volume
         vol.weight = Mathf.Lerp(vol.weight, 0, 0.005f);

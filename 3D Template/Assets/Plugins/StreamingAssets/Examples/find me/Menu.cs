@@ -11,6 +11,8 @@ public class Menu : MonoBehaviour
 
     [SerializeField] Health health;
 
+    [SerializeField] Combo combo;
+
     [Header("Gui")]
 
     [SerializeField] TextMeshProUGUI header;
@@ -79,6 +81,8 @@ public class Menu : MonoBehaviour
         //Cheat
 
         ListenForCheat(() => { WeaponSelect.equipped.ammo = WeaponSelect.equipped.ammoLimit; }, "fullclip");
+        ListenForCheat(() => health.value += 0.25f, "combo");
+        ListenForCheat(() => combo.value -= 0.25f, "pain");
     }
 
 
