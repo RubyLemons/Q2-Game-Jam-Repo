@@ -13,6 +13,8 @@ public class EnemySpawning : MonoBehaviour
     [SerializeField] Transform points;
     [SerializeField] GameObject enemy;
 
+    [SerializeField] Transform enemyContainer;
+
     [Space(10)]
 
     [Range(0, 30)] [SerializeField] int amount = 1;
@@ -56,6 +58,15 @@ public class EnemySpawning : MonoBehaviour
         headerInfoWrapper.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = waveMessage[wave < 9 ? 0 : 1];
 
         AnimateGui();
+
+        if (waveSeconds <= 0 || enemyContainer.childCount == 0)
+        {
+            if (deb) return;
+
+            AnimateNewRound();
+
+            ProduceEnemy(); //COMEBAKC
+        }
 
         //DEBUG
         if (Input.GetKeyDown(KeyCode.F))
@@ -131,7 +142,7 @@ public class EnemySpawning : MonoBehaviour
         //produce
         Transform spawnPoint = points.GetChild(Random.Range(0, points.childCount - 1));
 
-        GameObject newEnemy = Instantiate(enemy);
+        GameObject newEnemy = Instantiate(enemy, enemyContainer);
         newEnemy.SetActive(false);
 
         //position

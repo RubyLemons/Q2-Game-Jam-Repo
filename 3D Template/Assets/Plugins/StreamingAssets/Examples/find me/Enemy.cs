@@ -74,6 +74,7 @@ public class Enemy : MonoBehaviour
         //DEBUG
         if (health <= 0) {
             gameObject.SetActive(false);
+            gameObject.transform.SetParent(null);
             health = 1;
         }
     }
