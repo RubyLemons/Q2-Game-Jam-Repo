@@ -17,12 +17,13 @@ public class EnemySpawning : MonoBehaviour
 
     [Space(10)]
 
-    [Range(0, 30)] [SerializeField] int amount = 1;
-    [Range(0, 2)][SerializeField] float multiplier = 1.25f;
+    [Range(0, 30)] [SerializeField] float amount = 2;
+    [Range(0, 4)][SerializeField] float multiplier = 1.25f;
 
     [Space(10)]
 
     [SerializeField] int wave;
+    [SerializeField] int maxWave = 5;
 
     [SerializeField] float waveTime = 60 + 30;
     float waveSeconds;
@@ -51,11 +52,11 @@ public class EnemySpawning : MonoBehaviour
 
     void Update()
     {
-        wave = Mathf.Clamp(wave, 0, 10);
+        wave = Mathf.Clamp(wave, 0, maxWave);
 
         waveSeconds = (waveSeconds > 0) ? waveSeconds - Time.deltaTime : 0; //timer
 
-        headerInfoWrapper.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = waveMessage[wave < 9 ? 0 : 1];
+        headerInfoWrapper.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = waveMessage[(wave < maxWave - 1) ? 0 : 1];
 
         AnimateGui();
 
@@ -63,20 +64,23 @@ public class EnemySpawning : MonoBehaviour
         {
             if (deb) return;
 
-            AnimateNewRound();
+            AnimateNewRound(() => {
 
-            ProduceEnemy(); //COMEBAKC
+                wave++;
+                waveSeconds = waveTime;
+
+                for (int i = 0; i < Mathf.CeilToInt(amount); i++)
+                {
+                    ProduceEnemy();
+                }
+            });
+
+            amount *= multiplier;
         }
 
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.F))
-            AnimateNewRound();
-
-        if (Input.GetKeyDown(KeyCode.G))
-            ProduceEnemy();
     }
 
-    void AnimateNewRound()
+    void AnimateNewRound(System.Action action)
     {
         deb = true;
 
@@ -106,8 +110,8 @@ public class EnemySpawning : MonoBehaviour
             header.color = Color.white;
 
             //new round
-            wave++;
-            waveSeconds = waveTime;
+
+            action.Invoke();
 
             float elaspedTime = 0;
 
