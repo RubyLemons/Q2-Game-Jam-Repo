@@ -36,33 +36,55 @@ public class Tks
 
         [Space(10)]
 
-        public Animator animator;
-        public string shake = "shake";
-        public string[] reload = new string[2];
+        public Animate animateTopic;
+        public Fire fireTopic;
+        public Ammunation ammoTopic;
 
-        public float pullBack;
-        [Range(0, 1)] public float pullBackSmooth = 0.05f;
+        #region class containers
+        [System.Serializable]
+        public class Animate
+        {
+            public Animator animator;
+            [Tooltip("Animation name for camera animation")] public string shake = "shake";
+            [Tooltip("Animation name for gun reload")] public string[] reload = new string[2];
 
-        [Header("Fire")]
+            public float pullBack;
+            [Range(0, 1)] public float pullBackSmoothing = 0.05f;
+        }
 
-        [Range(0, 1)] public float damage = 0.01f;
+        [System.Serializable]
+        public class Fire
+        {
+            [Range(0, 1)] public float damage = 0.01f;
+            [Tooltip("Piercing for enemies only")] public bool piercing;
+            [Tooltip("Damange reduction each piercing for enemies")][Range(0, 1)] public float breakDamageReduction = 0.25f;
 
-        [Space(10)]
+            [Space(10)]
 
-        [Range(0, 1)] public float spread = 0.1f;
-        [Range(0, 90)] public float recoil = 5;
-        [Range(0, 1)] public float recoilSmooth = 0.025f;
-        [Range(1, 10)] public int bullets = 1;
+            [Range(1, 10)] public int bullets = 1;
 
-        [Space(10)]
+            [Space(10)]
 
-        [Range(0, 10)] public float reloadTime;
-        [Range(0, 10)] public float fireRate = 0.25f;
+            [Range(0, 1)] public float spread = 0.1f;
 
-        [Header("Ammunation")]
+            [Space(10)]
 
-        public int ammo;
-        [Range(0, 999)] public int ammoLimit;
+            [Range(0, 90)] public float recoil = 5;
+            [Range(0, 1)] public float recoilSmoothing = 0.025f;
+
+            [Header("Cooldowns")]
+
+            [Tooltip("Reload cooldown, ammo restores after this timer ends")] [Range(0, 10)] public float reloadTime;
+            [Tooltip("Fire cooldown time")] [Range(0, 10)] public float fireRate = 0.25f;
+        }
+        
+        [System.Serializable]
+        public class Ammunation
+        {
+            public int ammo;
+            [Range(0, 999)] public int ammoLimit;
+        }
+        #endregion
     }
 
     //run everyframe
