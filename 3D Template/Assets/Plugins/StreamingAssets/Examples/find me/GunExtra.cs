@@ -15,9 +15,9 @@ public class GunExtra : MonoBehaviour
         //Revolver
 
         if (WeaponSelect.equipped.type == Tks.WeaponType.Revolver)
-            for (int i = 0; i < WeaponSelect.equipped.ammoLimit; i++)
+            for (int i = 0; i < WeaponSelect.equipped.ammoTopic.ammoLimit; i++)
             {
-                if (i < WeaponSelect.equipped.ammo)
+                if (i < WeaponSelect.equipped.ammoTopic.ammo)
                 {
                     bulletsStatic.GetChild(i).gameObject.SetActive(true);
                     bulletsAnimated[i].SetActive(false);

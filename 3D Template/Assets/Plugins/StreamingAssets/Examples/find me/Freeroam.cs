@@ -98,7 +98,7 @@ public class Freeroam : MonoBehaviour
 
         movementBlend = Mathf.Lerp(movementBlend, (fast && ground && !slideDeb) ? 0.5f : (slideDeb) ? 1 : 0, 0.45f);
 
-        WeaponSelect.equipped.animator.SetFloat("movement", movementBlend);
+        WeaponSelect.equipped.animateTopic.animator.SetFloat("movement", movementBlend);
     }
 
 

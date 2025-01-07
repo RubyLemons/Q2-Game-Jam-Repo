@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -43,30 +45,30 @@ public class Gun : MonoBehaviour
         if (WeaponSelect.wheelEnabled || Time.timeScale < 1) return;
 
         //ammo clamp
-        WeaponSelect.equipped.ammo = Mathf.Clamp(WeaponSelect.equipped.ammo, 0, WeaponSelect.equipped.ammoLimit);
+        WeaponSelect.equipped.ammoTopic.ammo = Mathf.Clamp(WeaponSelect.equipped.ammoTopic.ammo, 0, WeaponSelect.equipped.ammoTopic.ammoLimit);
 
 
         //Animate Gui
 
-        Tks.OnValueChanged((p) => AmmoGui(), WeaponSelect.equipped.ammo, "Ammo");
+        Tks.OnValueChanged((p) => AmmoGui(), WeaponSelect.equipped.ammoTopic.ammo, "Ammo");
 
 
         //Fire
 
-        reloadAction = WeaponSelect.equipped.animator.GetCurrentAnimatorStateInfo(0).IsName("reload");
-        fireAction = WeaponSelect.equipped.animator.GetCurrentAnimatorStateInfo(0).IsName("fire");
+        reloadAction = WeaponSelect.equipped.animateTopic.animator.GetCurrentAnimatorStateInfo(0).IsName("reload");
+        fireAction = WeaponSelect.equipped.animateTopic.animator.GetCurrentAnimatorStateInfo(0).IsName("fire");
 
         elaspedTime += Time.deltaTime;
-        fireDeb = (elaspedTime < WeaponSelect.equipped.fireRate);
+        fireDeb = (elaspedTime < WeaponSelect.equipped.fireTopic.fireRate);
 
-        ammoFull = WeaponSelect.equipped.ammo == WeaponSelect.equipped.ammoLimit;
-        ammoEmpty = WeaponSelect.equipped.ammo <= 0;
+        ammoFull = WeaponSelect.equipped.ammoTopic.ammo == WeaponSelect.equipped.ammoTopic.ammoLimit;
+        ammoEmpty = WeaponSelect.equipped.ammoTopic.ammo <= 0;
 
         if (Input.GetMouseButton(0) && !ammoEmpty && (!fireDeb && !reloadAction)) {
 
             elaspedTime = 0;
 
-            for (int i = 0; i < WeaponSelect.equipped.bullets; i++)
+            for (int i = 0; i < WeaponSelect.equipped.fireTopic.bullets; i++)
                 Fire();
         }
 
@@ -80,45 +82,65 @@ public class Gun : MonoBehaviour
             Reload();
 
         //cam animated recoil
-        camAnimated.localRotation = Quaternion.Lerp(camAnimated.localRotation, Quaternion.identity, WeaponSelect.equipped.recoilSmooth);
-        viewmodel.localPosition = Vector3.Lerp(viewmodel.localPosition, Vector3.zero, WeaponSelect.equipped.pullBackSmooth);
+        camAnimated.localRotation = Quaternion.Lerp(camAnimated.localRotation, Quaternion.identity, WeaponSelect.equipped.fireTopic.recoilSmoothing);
+        viewmodel.localPosition = Vector3.Lerp(viewmodel.localPosition, Vector3.zero, WeaponSelect.equipped.animateTopic.pullBackSmoothing);
     }
 
     public void Fire()
     {
         //aniamte
 
-        WeaponSelect.equipped.animator.Play("fire", 0, 0.0f);
-        camShake.Play(WeaponSelect.equipped.shake, 0, 0.0f);
+        WeaponSelect.equipped.animateTopic.animator.Play("fire", 0, 0.0f);
+        camShake.Play(WeaponSelect.equipped.animateTopic.shake, 0, 0.0f);
 
-        WeaponSelect.equipped.ammo -= 1;
+        WeaponSelect.equipped.ammoTopic.ammo -= 1;
 
-        camAnimated.transform.localRotation *= Quaternion.Euler(Vector3.left * WeaponSelect.equipped.recoil / WeaponSelect.equipped.bullets);
-        viewmodel.localPosition += (Vector3.forward * -Mathf.Abs(WeaponSelect.equipped.pullBack));
+        camAnimated.transform.localRotation *= Quaternion.Euler(Vector3.left * WeaponSelect.equipped.fireTopic.recoil / WeaponSelect.equipped.fireTopic.bullets);
+        viewmodel.localPosition += (Vector3.forward * -Mathf.Abs(WeaponSelect.equipped.animateTopic.pullBack));
 
 
         //Raycast
 
-        Vector3 spread = (freelook.cam.transform.right * Random.Range((float)-WeaponSelect.equipped.spread, WeaponSelect.equipped.spread)) + (freelook.cam.transform.up * Random.Range((float)-WeaponSelect.equipped.spread, WeaponSelect.equipped.spread));
-        bool ray = Physics.Raycast(freelook.cam.transform.position, freelook.cam.transform.forward + spread, out RaycastHit hit, 100, layers);
+        Vector3 spread = (freelook.cam.transform.right * Random.Range((float)-WeaponSelect.equipped.fireTopic.spread, WeaponSelect.equipped.fireTopic.spread)) + (freelook.cam.transform.up * Random.Range((float)-WeaponSelect.equipped.fireTopic.spread, WeaponSelect.equipped.fireTopic.spread));
 
+        bool ray = false;
+        RaycastHit[] hit = new RaycastHit[] { };
+
+        if (!WeaponSelect.equipped.fireTopic.piercing) {
+            ray = Physics.Raycast(freelook.cam.transform.position, freelook.cam.transform.forward + spread, out hit[0], 100, layers);
+        }
+        else {
+            hit = Physics.RaycastAll(freelook.cam.transform.position, freelook.cam.transform.forward + spread, 100, layers);
+
+            //reorder with for ipairs
+            System.Array.Sort(hit, (a, b) => a.distance.CompareTo(b.distance));
+        }
 
         //Attack
 
-        if (ray)
-        {
-            Enemy enemy = hit.collider.GetComponent<Enemy>();
+        if (ray) return;
 
-            bool head = (enemy == null && hit.collider.tag == "Enemy");
-            enemy = (head) ? hit.collider.transform.parent.GetComponent<Enemy>() : enemy;
+        int reductionMultiplier = 0;
+
+        for (int i = 0; i < hit.Length; i++)
+        {
+            Enemy enemy = hit[i].collider.GetComponent<Enemy>();
+
+            bool head = (enemy == null && hit[i].collider.tag == "Enemy");
+            enemy = (head) ? hit[i].collider.transform.parent.GetComponent<Enemy>() : enemy;
 
             if (enemy)
             {
-                enemy.health -= WeaponSelect.equipped.damage * ((head) ? 2 : 1);
+                enemy.health -= WeaponSelect.equipped.fireTopic.damage * (head ? 2 : 1) * (1 - (i * WeaponSelect.equipped.fireTopic.breakDamageReduction)); //decrease by 25% each break
+                print(enemy +" "+ WeaponSelect.equipped.fireTopic.damage * (head ? 2 : 1) * (1 - (i * WeaponSelect.equipped.fireTopic.breakDamageReduction)));
+
+                reductionMultiplier++;
+
+                //blood particle effect can happen here
             }
             else
             {
-                BulletScar(hit);
+                BulletScar(hit[i]);
             }
         }
     }
@@ -139,12 +161,12 @@ public class Gun : MonoBehaviour
         if (reloadDeb || reloadAction || fireAction || ammoFull) return;
         reloadDeb = true;
 
-        WeaponSelect.equipped.animator.Play(!ammoEmpty ? WeaponSelect.equipped.reload[0] : WeaponSelect.equipped.reload[1]);
+        WeaponSelect.equipped.animateTopic.animator.Play(!ammoEmpty ? WeaponSelect.equipped.animateTopic.reload[0] : WeaponSelect.equipped.animateTopic.reload[1]);
 
-        float sleep = WeaponSelect.equipped.reloadTime * 1000;
+        float sleep = WeaponSelect.equipped.fireTopic.reloadTime * 1000;
 
         StartCoroutine(Tks.SetTimeout(() => {
-            WeaponSelect.equipped.ammo = WeaponSelect.equipped.ammoLimit;
+            WeaponSelect.equipped.ammoTopic.ammo = WeaponSelect.equipped.ammoTopic.ammoLimit;
             reloadDeb = false;
         }, sleep));
     }
@@ -152,12 +174,12 @@ public class Gun : MonoBehaviour
     void AmmoGui()
     {
         //add new
-        for (int i = 0; i < WeaponSelect.equipped.ammo; i++)
+        for (int i = 0; i < WeaponSelect.equipped.ammoTopic.ammo; i++)
             Instantiate(ammoImg, ammoRapper);
 
         //clear all
         for (int i = 0; i < ammoRapper.childCount; i++)
-            if (i >= WeaponSelect.equipped.ammo)
+            if (i >= WeaponSelect.equipped.ammoTopic.ammo)
             {
                 Destroy(ammoRapper.GetChild(i).gameObject);
             }

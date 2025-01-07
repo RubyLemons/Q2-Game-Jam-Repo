@@ -80,7 +80,7 @@ public class Menu : MonoBehaviour
 
         //Cheat
 
-        ListenForCheat(() => { WeaponSelect.equipped.ammo = WeaponSelect.equipped.ammoLimit; }, "fullclip");
+        ListenForCheat(() => { WeaponSelect.equipped.ammoTopic.ammo = WeaponSelect.equipped.ammoTopic.ammoLimit; }, "fullclip");
         ListenForCheat(() => health.value += 0.25f, "combo");
         ListenForCheat(() => combo.value -= 0.25f, "pain");
     }
