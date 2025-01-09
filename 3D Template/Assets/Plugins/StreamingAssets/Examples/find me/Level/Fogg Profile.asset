@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Value: 0
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.0017406585, g: 0.0017406585, b: 0.0017406585, a: 1}
+    m_Value: {r: 0.0007314645, g: 0.0007314645, b: 0.0007314645, a: 1}
   tint:
     m_OverrideState: 1
     m_Value: {r: 35.83443, g: 7.692208, b: 0, a: 1}
@@ -60,7 +60,7 @@ MonoBehaviour:
     m_Value: 1
   depthExtent:
     m_OverrideState: 1
-    m_Value: 210.63
+    m_Value: 165.74
   denoisingMode:
     m_OverrideState: 1
     m_Value: 0
@@ -430,7 +430,7 @@ MonoBehaviour:
     m_Value: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 2.11
+    m_Value: 3.05
   directLightingStrength:
     m_OverrideState: 1
     m_Value: 1
