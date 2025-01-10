@@ -2404,17 +2404,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7344544573138216005, guid: e3de4175a331a5b4192e24f24cb30086,
         type: 3}
+      propertyPath: btnEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344544573138216005, guid: e3de4175a331a5b4192e24f24cb30086,
+        type: 3}
+      propertyPath: btnEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344544573138216005, guid: e3de4175a331a5b4192e24f24cb30086,
+        type: 3}
       propertyPath: btnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 586218827}
+    - target: {fileID: 7344544573138216005, guid: e3de4175a331a5b4192e24f24cb30086,
+        type: 3}
+      propertyPath: btnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344544573138216005, guid: e3de4175a331a5b4192e24f24cb30086,
+        type: 3}
+      propertyPath: btnEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7344544573138216005, guid: e3de4175a331a5b4192e24f24cb30086,
         type: 3}
       propertyPath: btnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: NewGameButton
+      value: NewGameButton2
       objectReference: {fileID: 0}
     - target: {fileID: 7344544573138216005, guid: e3de4175a331a5b4192e24f24cb30086,
         type: 3}
       propertyPath: btnEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CREDITS, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344544573138216005, guid: e3de4175a331a5b4192e24f24cb30086,
+        type: 3}
+      propertyPath: btnEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: SceneChanger, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7344544573595448461, guid: e3de4175a331a5b4192e24f24cb30086,
