@@ -1,13 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.AI;
+
+[System.Serializable]
+public class AnimationBlend
+{
+    #region Variables
+    [SerializeField] Enemy enemy;
+
+    [Space(10)]
+
+    public Animator animator;
+
+    [Space(10)]
+
+    float blend;
+    [Tooltip("Animtion blend speed")] [Range(0, 1)] [SerializeField] float smoothing = 0.5f;
+    #endregion
+    #region Methods
+    public void Update()
+    {
+        bool moving = enemy.agent.velocity.magnitude > 0.5f;
+        blend = Mathf.Lerp(blend, moving ? 1 : 0, smoothing);
+
+        animator.SetFloat("Movement", blend);
+    }
+    #endregion
+}
 
 public class Enemy : MonoBehaviour
 {
     [Header("Enemy")]
 
-    [SerializeField] NavMeshAgent agent;
+    public NavMeshAgent agent;
     float initialSpeed;
 
     [Range(0, 1)] public float health = 1;
@@ -18,17 +45,21 @@ public class Enemy : MonoBehaviour
 
     [Header("Attack")]
 
-    [Range(0, 1)] [SerializeField] float damage = 0.25f;
+    [Range(0, 1)] [SerializeField] float damage = 0.125f;
 
     [Space(10)]
 
-    [SerializeField] float attackRange = 1f;
+    public float attackRange = 1f;
     float range;
     bool inRange;
 
-    [SerializeField] float attackTime = 0.15f;
-    [SerializeField] float attackSleepTime = 0.25f;
+    [Tooltip("Time enemy is in range before affecting player")] [SerializeField] float attackTime = 0.15f;
+    [Tooltip("Attack cooldown (Recommened to use animation length)")] [SerializeField] float attackSleepTime = 0.25f;
     bool attackDeb;
+
+    [Header("Animation")]
+
+    [SerializeField] AnimationBlend movementBlend;
 
     void Awake()
     {
@@ -55,17 +86,17 @@ public class Enemy : MonoBehaviour
 
         //Attack
 
-        if (!attackDeb) {
+        if (inRange && !attackDeb)
+        {
             attackDeb = true;
 
-            //PLAY();
+            movementBlend.animator.Play("Attack", 1);
 
-            StartCoroutine(Tks.SetTimeout(() =>
-            {
+            StartCoroutine(Tks.SetTimeout(() => {
                 if (inRange) {
                     plrHealth.value -= damage;
                 }
-            }, attackTime * 1000));
+            } , attackTime * 1000));
 
             //deb
             StartCoroutine(Tks.SetTimeout(() => attackDeb = false, attackSleepTime * 1000));
@@ -77,5 +108,21 @@ public class Enemy : MonoBehaviour
             gameObject.transform.SetParent(null);
             health = 1;
         }
+
+        #region ANIMATION
+        movementBlend.Update();
+        #endregion
+    }
+}
+
+[CustomEditor(typeof(Enemy))]
+class EnemyEditor : Editor
+{
+    void OnSceneGUI()
+    {
+        Enemy enemy = (Enemy)target;
+
+        Handles.color = Color.red;
+        Handles.DrawWireDisc(enemy.transform.position, Vector3.up, enemy.attackRange);
     }
 }
