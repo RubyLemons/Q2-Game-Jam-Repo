@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Plugins/StreamingAssets/Examples/find me/Scenes/Level.unity
     guid: 172a65786a877274ebe7479809e17f67
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity
+    guid: d6d8d8c7b90efe14cbdc747a3076f2c1
   m_configObjects: {}
