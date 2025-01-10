@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -107,6 +105,7 @@ public class Gun : MonoBehaviour
         RaycastHit[] hit = new RaycastHit[] { };
 
         if (!WeaponSelect.equipped.fireTopic.piercing) {
+            hit = new RaycastHit[1];
             ray = Physics.Raycast(freelook.cam.transform.position, freelook.cam.transform.forward + spread, out hit[0], 100, layers);
         }
         else {
@@ -132,7 +131,6 @@ public class Gun : MonoBehaviour
             if (enemy)
             {
                 enemy.health -= WeaponSelect.equipped.fireTopic.damage * (head ? 2 : 1) * (1 - (i * WeaponSelect.equipped.fireTopic.breakDamageReduction)); //decrease by 25% each break
-                print(enemy +" "+ WeaponSelect.equipped.fireTopic.damage * (head ? 2 : 1) * (1 - (i * WeaponSelect.equipped.fireTopic.breakDamageReduction)));
 
                 reductionMultiplier++;
 
