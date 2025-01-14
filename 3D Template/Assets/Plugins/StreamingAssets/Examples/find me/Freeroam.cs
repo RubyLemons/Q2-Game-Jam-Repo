@@ -83,7 +83,7 @@ public class Freeroam : MonoBehaviour
         //Jump
 
         RaycastHit hit;
-        ground = Physics.BoxCast(transform.position, new Vector3(controller.radius - 0.1f, controller.radius / 2, controller.radius - 0.1f), Vector3.down, out hit, Quaternion.identity, controller.height / 2);
+        ground = Physics.BoxCast(transform.position, new Vector3(controller.radius - 0.1f, controller.radius / 2, controller.radius - 0.1f), Vector3.down, out hit, Quaternion.identity, controller.height / 5);
 
         if (Input.GetKeyDown(KeyCode.Space) && ground && freeroam && !slideDeb)
             velo = jumpHeight;
