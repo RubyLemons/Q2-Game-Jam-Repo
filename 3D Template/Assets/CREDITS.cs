@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CREDITS : MonoBehaviour
 {
 
-    [SerializeField] private string Level1 = "Credits";
+    [SerializeField] private string Level1 = "CREDITS";
     public void Start()
     {
 
