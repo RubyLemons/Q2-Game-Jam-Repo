@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.AI;
+
 
 [System.Serializable]
 public class AnimationBlend
@@ -114,15 +114,17 @@ public class Enemy : MonoBehaviour
         #endregion
     }
 }
+//alex this breaks the build
+#if UNITY_EDITOR
+//[CustomEditor(typeof(Enemy))]
+//class EnemyEditor : Editor
+//{
+//    void OnSceneGUI()
+//    {
+//        Enemy enemy = (Enemy)target;
 
-[CustomEditor(typeof(Enemy))]
-class EnemyEditor : Editor
-{
-    void OnSceneGUI()
-    {
-        Enemy enemy = (Enemy)target;
-
-        Handles.color = Color.red;
-        Handles.DrawWireDisc(enemy.transform.position, Vector3.up, enemy.attackRange);
-    }
-}
+//        Handles.color = Color.red;
+//        Handles.DrawWireDisc(enemy.transform.position, Vector3.up, enemy.attackRange);
+//    }
+//}
+#endif
