@@ -17,6 +17,23 @@ public class Health : BarController
 
     [SerializeField] Volume vol;
 
+    [Header("Sound")]
+
+    [SerializeField] AudioSource audioSrc;
+    [Tooltip("Clip that plays upon taking damage")] [SerializeField] AudioClip clip;
+
+    [Space(10)]
+
+    [SerializeField] AudioSource track;
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        audioSrc.clip = clip;
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -35,6 +52,10 @@ public class Health : BarController
 
                 //volume
                 vol.weight = 1;
+
+                //sound
+
+                audioSrc.Play(); //play stun sound
             }
         }, value, "Health");
 
@@ -57,5 +78,14 @@ public class Health : BarController
 
         //volume
         vol.weight = Mathf.Lerp(vol.weight, 0, 0.005f);
+
+        //sound
+
+        if (track == null) {
+            Debug.LogWarning("`Track` is null! Health can not affect soundtrack pitch.");
+            return;
+        }
+
+        track.pitch = (1 - (vol.weight / 2)) * (Menu.paused ? 0 : 1);  //health effect soundtrack speed and stop if time paused
     }
 }

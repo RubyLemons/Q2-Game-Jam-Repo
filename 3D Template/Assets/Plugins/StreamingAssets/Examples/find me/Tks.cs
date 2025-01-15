@@ -39,8 +39,9 @@ public class Tks
         public Animate animateTopic;
         public Fire fireTopic;
         public Ammunation ammoTopic;
+        public Audio audioTopic;
 
-        #region class containers
+        #region --class containers
         [System.Serializable]
         public class Animate
         {
@@ -83,6 +84,21 @@ public class Tks
         {
             public int ammo;
             [Range(0, 999)] public int ammoLimit;
+        }
+
+        [System.Serializable]
+        public class Audio
+        {
+            public AudioSource audioSrc;
+
+            [Space(10)]
+
+            public AudioClip clip;
+            
+            [Space(10)]
+
+            [Range(0, 1)] public float volume = 0.225f;
+            [Range(0, 1)] [SerializeField] public float pitchDifferRange = 0.1f;
         }
         #endregion
     }
@@ -139,4 +155,15 @@ public class Tks
 
         late[key] = real;
     }
+
+    #region --random percentange chance
+    public static bool TestChance(float inputChance)
+    {
+        float randomPercent = Random.Range(0f, 1f);
+
+        bool result = (randomPercent <= Mathf.Clamp01(inputChance));
+
+        return result;
+    }
+    #endregion
 }

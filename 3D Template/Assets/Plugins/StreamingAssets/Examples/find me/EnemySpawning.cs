@@ -1,8 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using static Tks;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+
+[System.Serializable]
+public class Chance
+{
+    [Range(0, 1)] public float first = 0.5f;
+    [Range(0, 1)] public float second = 0.5f;
+    [Range(0, 1)] public float third = 0.5f;
+}
 
 public class EnemySpawning : MonoBehaviour
 {
@@ -11,7 +20,10 @@ public class EnemySpawning : MonoBehaviour
     [Header("Spawning")]
 
     [SerializeField] Transform points;
-    [SerializeField] GameObject enemy;
+
+    [SerializeField] GameObject[] enemy;
+    int index;
+    [SerializeField] Chance chance;
 
     [SerializeField] Transform enemyContainer;
 
@@ -118,8 +130,8 @@ public class EnemySpawning : MonoBehaviour
             while (elaspedTime < 2.5f) {
                 elaspedTime += Time.deltaTime;
                 yield return null;
-                StartCoroutine(Tks.FlickerImg(header.gameObject, 150));
-                StartCoroutine(Tks.FlickerImg(label.gameObject, 150));
+                StartCoroutine(FlickerImg(header.gameObject, 150));
+                StartCoroutine(FlickerImg(label.gameObject, 150));
             }
 
             deb = false;
@@ -146,7 +158,26 @@ public class EnemySpawning : MonoBehaviour
         //produce
         Transform spawnPoint = points.GetChild(Random.Range(0, points.childCount - 1));
 
-        GameObject newEnemy = Instantiate(enemy, enemyContainer);
+        #region --Choose enemy type by `Chance`
+        if (TestChance(chance.first)) {
+            //SPAWN "FISRT"
+            index = 0;
+        }
+        else if (TestChance(chance.second)) {
+            //SPAWN "SPRINTER"
+            index = 1;
+        }
+        else if (TestChance(chance.third)) {
+            //SPAWN "THIRD"
+            index = 2;
+        }
+        else {
+            //SPAWN DEFAULT
+            index = 1;
+        }
+        #endregion
+
+        GameObject newEnemy = Instantiate(enemy[index], enemyContainer);
         newEnemy.SetActive(false);
 
         //position

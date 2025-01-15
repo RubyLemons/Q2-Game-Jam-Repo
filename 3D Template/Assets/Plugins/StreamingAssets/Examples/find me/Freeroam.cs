@@ -61,12 +61,15 @@ public class Freeroam : MonoBehaviour
     [SerializeField] float jumpHeight = 7.375f;
     float velo = -2.5f;
 
+    [Tooltip("`-1` will default it!")] [SerializeField] float rayRadius = -1;
     public bool ground;
 
     void Start()
     {
         initialFov = freelook.cam.fieldOfView;
         StopSlide();
+
+        rayRadius = (rayRadius < 0) ? controller.height / 2 : rayRadius; //default it
     }
 
     void Update()
@@ -83,7 +86,8 @@ public class Freeroam : MonoBehaviour
         //Jump
 
         RaycastHit hit;
-        ground = Physics.BoxCast(transform.position, new Vector3(controller.radius - 0.1f, controller.radius / 2, controller.radius - 0.1f), Vector3.down, out hit, Quaternion.identity, controller.height / 5);
+        ground = Physics.BoxCast(transform.position, new Vector3(controller.radius - 0.1f, controller.radius / 2, controller.radius - 0.1f), Vector3.down, out hit, Quaternion.identity, rayRadius);
+        Debug.DrawLine(transform.position + Vector3.down * controller.radius / 2, transform.position + Vector3.down * rayRadius);
 
         if (Input.GetKeyDown(KeyCode.Space) && ground && freeroam && !slideDeb)
             velo = jumpHeight;

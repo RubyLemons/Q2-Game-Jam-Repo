@@ -99,6 +99,11 @@ public class Gun : MonoBehaviour
 
         //Raycast
 
+        #region --audio src
+        WeaponSelect.equipped.audioTopic.audioSrc.pitch = 1 + Random.Range((float)-WeaponSelect.equipped.audioTopic.pitchDifferRange, WeaponSelect.equipped.audioTopic.pitchDifferRange); //randomize pitch
+        WeaponSelect.equipped.audioTopic.audioSrc.PlayOneShot(WeaponSelect.equipped.audioTopic.clip, WeaponSelect.equipped.audioTopic.volume); //play new and volume
+        #endregion
+
         Vector3 spread = (freelook.cam.transform.right * Random.Range((float)-WeaponSelect.equipped.fireTopic.spread, WeaponSelect.equipped.fireTopic.spread)) + (freelook.cam.transform.up * Random.Range((float)-WeaponSelect.equipped.fireTopic.spread, WeaponSelect.equipped.fireTopic.spread));
 
         bool ray = false;
@@ -117,7 +122,7 @@ public class Gun : MonoBehaviour
 
         //Attack
 
-        if (ray) return;
+        if (ray || hit.Length == 0) return;
 
         int reductionMultiplier = 0;
 

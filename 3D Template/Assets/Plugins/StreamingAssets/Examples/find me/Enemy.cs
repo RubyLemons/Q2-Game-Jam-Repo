@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
         agent.SetDestination(plr.position);
         agent.isStopped = inRange;
 
-        agent.speed = (attackDeb) ? initialSpeed : initialSpeed / 2;
+        agent.speed = (!attackDeb) ? initialSpeed : initialSpeed / 2;
 
 
         //Attack
