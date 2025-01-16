@@ -241,15 +241,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1315708015094916582}
-  health: 0.25
-  damage: 0.01
+  health: 1
+  damage: 0.253
   attackRange: 1.875
   attackTime: 0.45
-  attackSleepTime: 1
+  attackSleepTime: 0.6
   movementBlend:
     enemy: {fileID: 1315708015094916581}
     animator: {fileID: 5692572005567254751}
-    smoothing: 0.5
+    smoothing: 0.704
 --- !u!195 &1315708015094916582
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -260,7 +260,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.75
-  m_Speed: 1.75
+  m_Speed: 2.95
   m_Acceleration: 10000
   avoidancePriority: 50
   m_AngularSpeed: 10000
