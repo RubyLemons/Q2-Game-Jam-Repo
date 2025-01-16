@@ -8,9 +8,17 @@ public class ImgMover : MonoBehaviour
 
     [SerializeField] Image img;
 
-    public void ChangeImagePosition()
+    public void ToggleVisibility()
     {
-        img = GetComponent<Image>();
-        img.enabled = false;
+        if (img.enabled == true)
+        {
+            GetComponent<Image>();
+            img.enabled = false;
+        }
+        else
+        {
+            GetComponent<Image>();
+            img.enabled = true;
+        }
     }
 }
