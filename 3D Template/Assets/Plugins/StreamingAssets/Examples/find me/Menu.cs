@@ -42,6 +42,8 @@ public class Menu : MonoBehaviour
     Dictionary<string, string> userCombo = new Dictionary<string, string>();
     Dictionary<string, float> inputTimer = new Dictionary<string, float>();
 
+    [SerializeField] EnemySpawning spawningService;
+
 
     void Awake()
     {
@@ -61,6 +63,15 @@ public class Menu : MonoBehaviour
         else if (health.value > 0 && headerIndex == 1)
             Clean();
 
+        if (spawningService.wave > 5) {
+            spawningService.wave = 0;
+
+            health.value = 0;
+
+            paused = true;
+            Win();
+        }
+
         //Gui
 
         header.text = innerText[headerIndex];
@@ -78,11 +89,13 @@ public class Menu : MonoBehaviour
         }
 
 
-        //Cheat
+        //Cheats
 
+        ListenForCheat(() => spawningService.wave += 1, "skip");
+        ListenForCheat(() => spawningService.enemyContainer.gameObject.SetActive(!spawningService.enemyContainer.gameObject.activeSelf), "goaway");
         ListenForCheat(() => { WeaponSelect.equipped.ammoTopic.ammo = WeaponSelect.equipped.ammoTopic.ammoLimit; }, "fullclip");
-        ListenForCheat(() => health.value += 0.25f, "combo");
-        ListenForCheat(() => combo.value -= 0.25f, "pain");
+        ListenForCheat(() => combo.value += 0.25f, "combo");
+        ListenForCheat(() => health.value -= 0.25f, "pain");
     }
 
 
@@ -93,6 +106,30 @@ public class Menu : MonoBehaviour
         UpdateValues();
 
         group.GetComponent<Image>().color = backdropColor[1];
+
+        LeanTween.value(0.0f, 1.0f, 0.5f).setOnUpdate((a) => header.color = new Color(1, 1, 1, a))
+            .setIgnoreTimeScale(true);
+
+        LeanTween.cancel(header.gameObject);
+        header.transform.localScale = Vector3.one * (3.5f + pop);
+
+        LeanTween.scale(header.gameObject, Vector3.one * 3.5f, dur)
+            .setEaseInCubic()
+            .setIgnoreTimeScale(true);
+
+        header.transform.localRotation = Quaternion.Euler(Vector3.forward * (7.5f * Tks.GetRandomSign()));
+
+        btnRapper.blocksRaycasts = false;
+        btnRapper.alpha = 0.0f;
+        StartCoroutine(Tks.SetTimeout(() => LeanTween.value(0.0f, 1.0f, 0.5f).setOnUpdate((a) => btnRapper.alpha = a).setOnComplete(() => btnRapper.blocksRaycasts = true).setIgnoreTimeScale(true), 750, true));
+    }
+
+    void Win()
+    {
+        headerIndex = 2;
+        UpdateValues();
+
+        group.GetComponent<Image>().color = backdropColor[2];
 
         LeanTween.value(0.0f, 1.0f, 0.5f).setOnUpdate((a) => header.color = new Color(1, 1, 1, a))
             .setIgnoreTimeScale(true);

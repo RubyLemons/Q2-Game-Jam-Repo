@@ -25,7 +25,7 @@ public class EnemySpawning : MonoBehaviour
     int index;
     [SerializeField] Chance chance;
 
-    [SerializeField] Transform enemyContainer;
+    public Transform enemyContainer;
 
     [Space(10)]
 
@@ -34,7 +34,7 @@ public class EnemySpawning : MonoBehaviour
 
     [Space(10)]
 
-    [SerializeField] int wave;
+    public int wave;
     [SerializeField] int maxWave = 5;
 
     [SerializeField] float waveTime = 60 + 30;
@@ -64,7 +64,7 @@ public class EnemySpawning : MonoBehaviour
 
     void Update()
     {
-        wave = Mathf.Clamp(wave, 0, maxWave);
+        wave = Mathf.Clamp(wave, 0, maxWave + 1);
 
         waveSeconds = (waveSeconds > 0) ? waveSeconds - Time.deltaTime : 0; //timer
 
@@ -89,7 +89,6 @@ public class EnemySpawning : MonoBehaviour
 
             amount *= multiplier;
         }
-
     }
 
     void AnimateNewRound(System.Action action)

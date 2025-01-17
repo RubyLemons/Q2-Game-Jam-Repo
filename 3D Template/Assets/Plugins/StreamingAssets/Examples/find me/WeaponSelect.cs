@@ -18,6 +18,8 @@ public class WeaponSelect : MonoBehaviour
 
     [Header("Gui")]
 
+    [SerializeField] GameObject labelForNew;
+
     [SerializeField] Transform wheelRapper;
 
     public static bool wheelEnabled = false;
@@ -62,6 +64,51 @@ public class WeaponSelect : MonoBehaviour
 
         canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, wheelAlpha, 0.1f);
 
+        //unlock weapin
+
+        if (GetComponent<Combo>().value == 1)
+        {
+            GetComponent<Combo>().value = 0; //reset
+
+            StartCoroutine(UpdateShort()); //flicker that label junk
+
+            IEnumerator UpdateShort()
+            {
+                //actually give the dang weapon
+
+                for (int i = 0; i < collectable.Length; i++)
+                {
+                    if (!collectable[i].enabled)
+                    {
+                        collectable[i].enabled = true;
+
+                        //start
+                        float elaspedTime = 0;
+
+                        labelForNew.SetActive(true);
+
+                        //loop
+                        while (true)
+                        {
+                            yield return null;
+
+                            elaspedTime += Time.deltaTime;
+
+                            StartCoroutine(Tks.FlickerImg(labelForNew));
+
+                            if (elaspedTime > 5) break;
+                        }
+
+                        break;
+                    }
+                }
+
+                yield return new WaitForSeconds(0.1f);
+
+                //finalize
+                labelForNew.SetActive(false);
+            }
+        }
     }
 
     void ValidSlot()

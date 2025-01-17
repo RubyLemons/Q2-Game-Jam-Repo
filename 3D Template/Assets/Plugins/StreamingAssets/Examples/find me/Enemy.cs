@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEditor;
 
 
 [System.Serializable]
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
 
     [Range(0, 1)] public float health = 1;
 
+    bool died;
 
     Transform plr;
     Health plrHealth;
@@ -56,6 +58,14 @@ public class Enemy : MonoBehaviour
     [Tooltip("Time enemy is in range before affecting player")] [SerializeField] float attackTime = 0.15f;
     [Tooltip("Attack cooldown (Recommened to use animation length)")] [SerializeField] float attackSleepTime = 0.25f;
     bool attackDeb;
+
+    [Space(10)]
+
+    [SerializeField] bool explodeOnDeath;
+    [Range(0, 1)] [SerializeField] float maxExplodeDamge;
+    public float minExplodeRadius;
+    public float maxExplodeRadius;
+
 
     [Header("Animation")]
 
@@ -81,7 +91,8 @@ public class Enemy : MonoBehaviour
         agent.SetDestination(plr.position);
         agent.isStopped = inRange;
 
-        agent.speed = (!attackDeb) ? initialSpeed : initialSpeed / 2;
+        if (health > 0)
+            agent.speed = (!attackDeb) ? initialSpeed : initialSpeed / 2;
 
 
         //Attack
@@ -102,11 +113,26 @@ public class Enemy : MonoBehaviour
             StartCoroutine(Tks.SetTimeout(() => attackDeb = false, attackSleepTime * 1000));
         }
 
-        //DEBUG
-        if (health <= 0) {
-            gameObject.SetActive(false);
-            gameObject.transform.SetParent(null);
-            health = 1;
+        //death
+        if (health <= 0 && !died) {
+            died = true;
+
+            agent.speed = 0;
+            movementBlend.animator.Play("Death");
+
+            StartCoroutine(Tks.SetTimeout(() => 
+            LeanTween.move(gameObject, transform.position - Vector3.up * 1.25f, 1f)
+            .setOnComplete(() => Destroy(gameObject))
+            , 1000));
+
+
+            if (!explodeOnDeath) return;
+
+            float distance = (transform.position - plr.transform.position).magnitude;
+            distance = (distance < 0.01f) ? 0 : distance;
+
+            //damage based on distance
+            plr.GetComponent<Health>().value -= Mathf.Clamp01(maxExplodeDamge * (1 - (distance - minExplodeRadius) / (maxExplodeRadius - minExplodeRadius)));
         }
 
         #region ANIMATION
@@ -115,16 +141,21 @@ public class Enemy : MonoBehaviour
     }
 }
 //alex this breaks the build
-#if UNITY_EDITOR
-//[CustomEditor(typeof(Enemy))]
-//class EnemyEditor : Editor
-//{
-//    void OnSceneGUI()
-//    {
-//        Enemy enemy = (Enemy)target;
+//no it don't... I just made a typo, i dunno what u talkin abt fool?!
+#region UNITY_EDITOR
+[CustomEditor(typeof(Enemy))]
+class EnemyEditor : Editor
+{
+    void OnSceneGUI()
+    {
+        Enemy enemy = (Enemy)target;
 
-//        Handles.color = Color.red;
-//        Handles.DrawWireDisc(enemy.transform.position, Vector3.up, enemy.attackRange);
-//    }
-//}
-#endif
+        Handles.color = Color.red;
+        Handles.DrawWireDisc(enemy.transform.position, Vector3.up, enemy.attackRange);
+
+        Handles.color = Color.red / 2;
+        Handles.DrawWireDisc(enemy.transform.position, Vector3.up, enemy.maxExplodeRadius);
+        Handles.DrawWireDisc(enemy.transform.position, Vector3.up, enemy.minExplodeRadius);
+    }
+}
+#endregion

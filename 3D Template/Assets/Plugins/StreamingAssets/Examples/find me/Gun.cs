@@ -33,6 +33,13 @@ public class Gun : MonoBehaviour
     bool fireAction;
     bool reloadAction;
 
+    [Header("Combo")]
+
+    [Range(0, 1)] [SerializeField] float onShot = 0.01f;
+    [Range(0, 1)] [SerializeField] float onHeadShot = 0.05f;
+    [Range(0, 1)] [SerializeField] float onSlideMultiplier = 2.5f;
+    [Range(0, 1)] [SerializeField] float onSlideShot = 0.07f;
+
     void Start()
     {
         AmmoGui();
@@ -66,6 +73,8 @@ public class Gun : MonoBehaviour
 
             elaspedTime = 0;
 
+            WeaponSelect.equipped.ammoTopic.ammo -= 1;
+
             for (int i = 0; i < WeaponSelect.equipped.fireTopic.bullets; i++)
                 Fire();
         }
@@ -90,8 +99,6 @@ public class Gun : MonoBehaviour
 
         WeaponSelect.equipped.animateTopic.animator.Play("fire", 0, 0.0f);
         camShake.Play(WeaponSelect.equipped.animateTopic.shake, 0, 0.0f);
-
-        WeaponSelect.equipped.ammoTopic.ammo -= 1;
 
         camAnimated.transform.localRotation *= Quaternion.Euler(Vector3.left * WeaponSelect.equipped.fireTopic.recoil / WeaponSelect.equipped.fireTopic.bullets);
         viewmodel.localPosition += (Vector3.forward * -Mathf.Abs(WeaponSelect.equipped.animateTopic.pullBack));
@@ -122,16 +129,29 @@ public class Gun : MonoBehaviour
 
         //Attack
 
-        if (ray || hit.Length == 0) return;
-
         int reductionMultiplier = 0;
 
         for (int i = 0; i < hit.Length; i++)
         {
+            if (hit[i].collider == null) continue; //skip if no hit fool!
+
             Enemy enemy = hit[i].collider.GetComponent<Enemy>();
 
             bool head = (enemy == null && hit[i].collider.tag == "Enemy");
             enemy = (head) ? hit[i].collider.transform.parent.GetComponent<Enemy>() : enemy;
+
+            #region --COMBO LAZY
+
+            if (head) {
+                GetComponent<Combo>().value += onHeadShot * (Freeroam.slideDeb ? onSlideMultiplier : 1);
+            }
+            else if (enemy && !head) {
+                if (Freeroam.slideDeb)
+                    GetComponent<Combo>().value += onSlideShot;
+                else
+                    GetComponent<Combo>().value += onShot;
+            }
+            #endregion
 
             if (enemy)
             {
