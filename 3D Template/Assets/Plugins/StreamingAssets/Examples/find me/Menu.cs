@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Menu : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class Menu : MonoBehaviour
     public static bool paused;
 
     [SerializeField] Health health;
-
     [SerializeField] Combo combo;
 
     [Header("Gui")]
@@ -43,6 +43,7 @@ public class Menu : MonoBehaviour
     Dictionary<string, float> inputTimer = new Dictionary<string, float>();
 
     [SerializeField] EnemySpawning spawningService;
+    bool once;
 
 
     void Awake()
@@ -63,10 +64,8 @@ public class Menu : MonoBehaviour
         else if (health.value > 0 && headerIndex == 1)
             Clean();
 
-        if (spawningService.wave > 5) {
-            spawningService.wave = 0;
-
-            health.value = 0;
+        if (spawningService.wave > 5 && !once) {
+            once = true;
 
             paused = true;
             Win();
@@ -178,6 +177,15 @@ public class Menu : MonoBehaviour
 
     public void Continue()
     {
+        if (spawningService.wave > 5 && health.value > 0)
+        {
+            paused = false;
+            UpdateValues();
+
+            return;
+        }
+
+
         if (health.value > 0) {
             paused = false;
             UpdateValues();
@@ -193,6 +201,14 @@ public class Menu : MonoBehaviour
     public void Restart()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+
+        paused = false;
+        UpdateValues();
+    }
+
+    public void ReturnMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
 
         paused = false;
         UpdateValues();

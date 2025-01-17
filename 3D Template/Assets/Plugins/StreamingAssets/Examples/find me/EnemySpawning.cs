@@ -64,8 +64,6 @@ public class EnemySpawning : MonoBehaviour
 
     void Update()
     {
-        wave = Mathf.Clamp(wave, 0, maxWave + 1);
-
         waveSeconds = (waveSeconds > 0) ? waveSeconds - Time.deltaTime : 0; //timer
 
         headerInfoWrapper.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = waveMessage[(wave < maxWave - 1) ? 0 : 1];
@@ -104,7 +102,7 @@ public class EnemySpawning : MonoBehaviour
                 //animate secondaray header
 
                 LeanTween.value(range, 0, 1.25f)
-                    .setOnUpdate((v) => headerInfoWrapper.padding = new Vector4(0, 0, v, 0))
+                    .setOnUpdate((v) => { if (headerInfoWrapper != null) headerInfoWrapper.padding = new Vector4(0, 0, v, 0); })
                     .setEaseOutCubic()
                     .setOnComplete(() =>
                     {

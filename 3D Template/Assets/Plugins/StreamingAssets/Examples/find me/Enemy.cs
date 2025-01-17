@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEditor;
+using Unity.VisualScripting;
 
 
 [System.Serializable]
@@ -71,6 +72,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] AnimationBlend movementBlend;
 
+
+
+
     void Awake()
     {
         initialSpeed = agent.speed;
@@ -78,9 +82,14 @@ public class Enemy : MonoBehaviour
         plr = GameObject.Find("PLAYER").transform;
         plrHealth = plr.GetComponent<Health>();
     }
+    
 
     void Update()
     {
+        if ( died == true )
+        {
+           // Animator.Play("th");
+        }
         health = Mathf.Clamp01(health);
 
         range = (transform.position - plr.position).magnitude;
