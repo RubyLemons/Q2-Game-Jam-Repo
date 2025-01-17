@@ -142,7 +142,7 @@ public class Enemy : MonoBehaviour
 }
 //alex this breaks the build
 //no it don't... I just made a typo, i dunno what u talkin abt fool?!
-#region UNITY_EDITOR
+#if UNITY_EDITOR
 [CustomEditor(typeof(Enemy))]
 class EnemyEditor : Editor
 {
@@ -158,4 +158,4 @@ class EnemyEditor : Editor
         Handles.DrawWireDisc(enemy.transform.position, Vector3.up, enemy.minExplodeRadius);
     }
 }
-#endregion
+#endif
