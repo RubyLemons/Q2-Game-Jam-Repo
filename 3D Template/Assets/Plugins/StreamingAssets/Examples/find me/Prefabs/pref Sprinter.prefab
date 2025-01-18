@@ -878,7 +878,7 @@ MonoBehaviour:
     enemy: {fileID: 2921308672210201219}
     animator: {fileID: 4751115231569893127}
     smoothing: 0.719
-  ghost: {fileID: 0}
+  ghost: {fileID: 1870000182200082487}
 --- !u!195 &2921308672210201216
 NavMeshAgent:
   m_ObjectHideFlags: 0
