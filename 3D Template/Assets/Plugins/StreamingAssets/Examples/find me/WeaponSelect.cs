@@ -68,8 +68,6 @@ public class WeaponSelect : MonoBehaviour
 
         if (GetComponent<Combo>().value == 1)
         {
-            GetComponent<Combo>().value = 0; //reset
-
             StartCoroutine(UpdateShort()); //flicker that label junk
 
             IEnumerator UpdateShort()
@@ -80,6 +78,8 @@ public class WeaponSelect : MonoBehaviour
                 {
                     if (!collectable[i].enabled)
                     {
+                        GetComponent<Combo>().value = 0; //reset
+
                         collectable[i].enabled = true;
 
                         //start

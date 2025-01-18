@@ -10513,6 +10513,7 @@ MonoBehaviour:
   btnRapper: {fileID: 312264087}
   pop: 17.5
   dur: 0.45
+  spawningService: {fileID: 0}
 --- !u!225 &1531399681
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -23009,6 +23010,10 @@ MonoBehaviour:
   layers:
     serializedVersion: 2
     m_Bits: 65
+  onShot: 0.01
+  onHeadShot: 0.05
+  onSlideMultiplier: 2.5
+  onSlideShot: 0.07
 --- !u!1 &4038882180275769103
 GameObject:
   m_ObjectHideFlags: 0

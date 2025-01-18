@@ -72,6 +72,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] AnimationBlend movementBlend;
 
+    [Header("More")]
+
+    [SerializeField] GameObject ghost;
 
 
 
@@ -106,7 +109,7 @@ public class Enemy : MonoBehaviour
 
         //Attack
 
-        if (inRange && !attackDeb)
+        if (inRange && !attackDeb && !died)
         {
             attackDeb = true;
 
@@ -126,6 +129,9 @@ public class Enemy : MonoBehaviour
         if (health <= 0 && !died) {
             died = true;
 
+            ghost.transform.SetParent(null); //unparent
+            ghost.SetActive(true);
+
             agent.speed = 0;
             movementBlend.animator.Play("Death");
 
@@ -133,7 +139,6 @@ public class Enemy : MonoBehaviour
             LeanTween.move(gameObject, transform.position - Vector3.up * 1.25f, 1f)
             .setOnComplete(() => Destroy(gameObject))
             , 1000));
-
 
             if (!explodeOnDeath) return;
 

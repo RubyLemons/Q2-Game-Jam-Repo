@@ -44,6 +44,7 @@ public class Menu : MonoBehaviour
 
     [SerializeField] EnemySpawning spawningService;
     bool once;
+    bool ignoreWin;
 
 
     void Awake()
@@ -64,7 +65,7 @@ public class Menu : MonoBehaviour
         else if (health.value > 0 && headerIndex == 1)
             Clean();
 
-        if (spawningService.wave > 5 && !once) {
+        if (spawningService.wave > 5 && !once && !ignoreWin) {
             once = true;
 
             paused = true;
@@ -179,6 +180,9 @@ public class Menu : MonoBehaviour
     {
         if (spawningService.wave > 5 && health.value > 0)
         {
+            ignoreWin = true;
+            Clean();
+
             paused = false;
             UpdateValues();
 
