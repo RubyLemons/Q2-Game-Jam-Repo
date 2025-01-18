@@ -32,6 +32,7 @@ public class Tks
     {
         public WeaponType type;
         public Sprite ico;
+        public GameObject ammoIco;
         public bool enabled;
 
         [Space(10)]

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    
+
     [SerializeField] Freelook freelook;
     [SerializeField] Transform viewmodel;
 
@@ -42,7 +42,7 @@ public class Gun : MonoBehaviour
 
     void Start()
     {
-        AmmoGui();
+        AddNewAmmoGui();
     }
 
     void Update()
@@ -55,7 +55,7 @@ public class Gun : MonoBehaviour
 
         //Animate Gui
 
-        Tks.OnValueChanged((p) => AmmoGui(), WeaponSelect.equipped.ammoTopic.ammo, "Ammo");
+        Tks.OnValueChanged((p) => AddNewAmmoGui(), WeaponSelect.equipped.ammoTopic.ammo, "Ammo"); //outdated
 
 
         //Fire
@@ -69,11 +69,14 @@ public class Gun : MonoBehaviour
         ammoFull = WeaponSelect.equipped.ammoTopic.ammo == WeaponSelect.equipped.ammoTopic.ammoLimit;
         ammoEmpty = WeaponSelect.equipped.ammoTopic.ammo <= 0;
 
-        if (Input.GetMouseButton(0) && !ammoEmpty && (!fireDeb && !reloadAction)) {
+        if (Input.GetMouseButton(0) && !ammoEmpty && (!fireDeb && !reloadAction))
+        {
 
             elaspedTime = 0;
 
             WeaponSelect.equipped.ammoTopic.ammo -= 1;
+
+            RemoveAmmoGui();
 
             for (int i = 0; i < WeaponSelect.equipped.fireTopic.bullets; i++)
                 Fire();
@@ -87,6 +90,10 @@ public class Gun : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
             Reload();
+        
+        if (Input.GetKeyDown(KeyCode.F)) {
+            AddNewAmmoGui();
+        }
 
         //cam animated recoil
         camAnimated.localRotation = Quaternion.Lerp(camAnimated.localRotation, Quaternion.identity, WeaponSelect.equipped.fireTopic.recoilSmoothing);
@@ -116,11 +123,13 @@ public class Gun : MonoBehaviour
         bool ray = false;
         RaycastHit[] hit = new RaycastHit[] { };
 
-        if (!WeaponSelect.equipped.fireTopic.piercing) {
+        if (!WeaponSelect.equipped.fireTopic.piercing)
+        {
             hit = new RaycastHit[1];
             ray = Physics.Raycast(freelook.cam.transform.position, freelook.cam.transform.forward + spread, out hit[0], 100, layers);
         }
-        else {
+        else
+        {
             hit = Physics.RaycastAll(freelook.cam.transform.position, freelook.cam.transform.forward + spread, 100, layers);
 
             //reorder with for ipairs
@@ -140,19 +149,6 @@ public class Gun : MonoBehaviour
             bool head = (enemy == null && hit[i].collider.tag == "Enemy");
             enemy = (head) ? hit[i].collider.transform.parent.GetComponent<Enemy>() : enemy;
 
-            #region --COMBO LAZY
-
-            if (head) {
-                GetComponent<Combo>().value += onHeadShot * (Freeroam.slideDeb ? onSlideMultiplier : 1);
-            }
-            else if (enemy && !head) {
-                if (Freeroam.slideDeb)
-                    GetComponent<Combo>().value += onSlideShot;
-                else
-                    GetComponent<Combo>().value += onShot;
-            }
-            #endregion
-
             if (enemy)
             {
                 enemy.health -= WeaponSelect.equipped.fireTopic.damage * (head ? 2 : 1) * (1 - (i * WeaponSelect.equipped.fireTopic.breakDamageReduction)); //decrease by 25% each break
@@ -165,6 +161,30 @@ public class Gun : MonoBehaviour
             {
                 BulletScar(hit[i]);
             }
+
+
+
+            #region --COMBO LAZY
+
+            if (head)
+            {
+                GetComponent<Combo>().value += onHeadShot * (Freeroam.slideDeb ? onSlideMultiplier : 1);
+            }
+            else if (enemy && !head)
+            {
+                if (Freeroam.slideDeb)
+                {
+                    GetComponent<Combo>().value += onSlideShot;
+                }
+                else
+                {
+                    if (enemy.health <= 0)
+                    {
+                        GetComponent<Combo>().value += onShot;
+                    }
+                }
+            }
+            #endregion
         }
     }
 
@@ -188,23 +208,41 @@ public class Gun : MonoBehaviour
 
         float sleep = WeaponSelect.equipped.fireTopic.reloadTime * 1000;
 
-        StartCoroutine(Tks.SetTimeout(() => {
+        StartCoroutine(Tks.SetTimeout(() =>
+        {
             WeaponSelect.equipped.ammoTopic.ammo = WeaponSelect.equipped.ammoTopic.ammoLimit;
             reloadDeb = false;
+
+            AddNewAmmoGui();
         }, sleep));
     }
 
-    void AmmoGui()
+    void AddNewAmmoGui()
     {
-        //add new
-        for (int i = 0; i < WeaponSelect.equipped.ammoTopic.ammo; i++)
+        //add new ammo
+        for (int i = 0; i < WeaponSelect.equipped.ammoTopic.ammoLimit; i++) {
             Instantiate(ammoImg, ammoRapper);
+        }
+            
 
-        //clear all
+        //clear all extras
         for (int i = 0; i < ammoRapper.childCount; i++)
+        {
             if (i >= WeaponSelect.equipped.ammoTopic.ammo)
             {
                 Destroy(ammoRapper.GetChild(i).gameObject);
             }
+        }
+    }
+    
+    void RemoveAmmoGui()
+    {
+        //remove one
+
+        Animator thisImg = ammoRapper.GetChild(ammoRapper.childCount - 1).GetComponent<Animator>();
+
+        thisImg.transform.SetParent(ammoRapper.parent); //unparent
+
+        thisImg.enabled = true; //play
     }
 }
