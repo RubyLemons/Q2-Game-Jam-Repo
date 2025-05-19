@@ -32,11 +32,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _StencilWriteMaskDepth: 9
+    - _StencilWriteMaskGBuffer: 15
+    - _StencilWriteMaskMV: 41
     m_Colors:
     - _BaseColor: {r: 1, g: 0.96811587, b: 0.3254717, a: 1}
     - _Color: {r: 1, g: 0.96811587, b: 0.32547167, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &6908477956974798479
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -49,7 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 12
+  version: 13
   hdPluginSubTargetMaterialVersions:
     m_Keys: []
     m_Values: 

@@ -38,6 +38,9 @@ Material:
     - _EmissiveExposureWeight: 0
     - _EmissiveIntensity: 24.16
     - _Smoothness: 0
+    - _StencilWriteMaskDepth: 9
+    - _StencilWriteMaskGBuffer: 15
+    - _StencilWriteMaskMV: 41
     - _UseEmissiveIntensity: 1
     m_Colors:
     - _BaseColor: {r: 0, g: 0, b: 0, a: 0}
@@ -45,6 +48,7 @@ Material:
     - _EmissiveColor: {r: 24.16, g: 14.383656, b: 0.89525914, a: 24.16}
     - _EmissiveColorLDR: {r: 1, g: 0.7949778, b: 0.21226418, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &1609857617991718121
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -57,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 12
+  version: 13
   hdPluginSubTargetMaterialVersions:
     m_Keys: []
     m_Values: 

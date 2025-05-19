@@ -38,6 +38,7 @@ Material:
     - _BaseColor: {r: 0.4528302, g: 0.38803846, b: 0.28835884, a: 1}
     - _Color: {r: 0.45283014, g: 0.38803843, b: 0.2883588, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!114 &7806466036088772802
 MonoBehaviour:
   m_ObjectHideFlags: 11
@@ -50,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 12
+  version: 13
   hdPluginSubTargetMaterialVersions:
     m_Keys: []
     m_Values: 

@@ -91,11 +91,11 @@ public class Menu : MonoBehaviour
 
         //Cheats
 
-        ListenForCheat(() => spawningService.wave += 1, "skip");
-        ListenForCheat(() => spawningService.enemyContainer.gameObject.SetActive(!spawningService.enemyContainer.gameObject.activeSelf), "goaway");
-        ListenForCheat(() => { WeaponSelect.equipped.ammoTopic.ammo = WeaponSelect.equipped.ammoTopic.ammoLimit; }, "fullclip");
-        ListenForCheat(() => combo.value += 0.25f, "combo");
-        ListenForCheat(() => health.value -= 0.25f, "pain");
+        ListenForCheat(() => spawningService.wave += 1, "skip1");
+        ListenForCheat(() => spawningService.enemyContainer.gameObject.SetActive(!spawningService.enemyContainer.gameObject.activeSelf), "goaway1");
+        ListenForCheat(() => { WeaponSelect.equipped.ammoTopic.ammo = WeaponSelect.equipped.ammoTopic.ammoLimit; }, "fullclip1");
+        ListenForCheat(() => combo.value += 0.25f, "combo1");
+        ListenForCheat(() => health.value -= 0.25f, "pain1");
     }
 
 
