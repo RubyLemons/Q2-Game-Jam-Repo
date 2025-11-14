@@ -15,5 +15,8 @@ public class SceneChanger : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-
+    public void NewGameButtonRework()
+    {
+        SceneManager.LoadScene(2);
+    }
 }
