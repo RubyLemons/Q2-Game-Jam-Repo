@@ -6,12 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Plugins/StreamingAssets/Examples/find me/Scenes/Menu.unity
+    path: Assets/Old Project/Scenes/Menu.unity
     guid: 1242bbc1ce379b549841f0e8145a96c1
   - enabled: 1
-    path: Assets/Plugins/StreamingAssets/Examples/find me/Scenes/John Map.unity
+    path: Assets/Old Project/Scenes/John Map.unity
     guid: 823086aa8f6cdd64d9bf7ed1682adf39
   - enabled: 1
-    path: Assets/Plugins/StreamingAssets/Examples/find me/Scenes/Credits.unity
+    path: Assets/Old Project/Scenes/Credits.unity
     guid: d6d8d8c7b90efe14cbdc747a3076f2c1
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
