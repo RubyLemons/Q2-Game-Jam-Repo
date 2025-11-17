@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public class RenderOnClick : MonoBehaviour
+public class RenderOnClick1 : MonoBehaviour
 {
     public GameObject objectToRender;
-    public GameObject objectsToUnrender1;
+    public GameObject objectToRender2;
+    public GameObject objectToRender3;
+    public GameObject objectsToUnrender;
     public GameObject objectsToUnrender2;
-    public bool isRendered = false;
+    public GameObject objectsToUnrender3;
+
+    private bool isRendered = false;
    
     public void Onclick()
     { 
@@ -20,21 +24,27 @@ public class RenderOnClick : MonoBehaviour
         if (isRendered == true)
         {
             objectToRender.SetActive(true);
+            objectToRender2.SetActive(true);
+            objectToRender3.SetActive(true);
         }
         else if (isRendered == false)
         { 
             objectToRender.SetActive(false);
+            objectToRender2.SetActive(false);
+            objectToRender3.SetActive(false);
         }
 
         if (isRendered == true)
         {
-            objectsToUnrender1.SetActive(false);
+            objectsToUnrender.SetActive(false);
             objectsToUnrender2.SetActive(false);
+            objectsToUnrender3.SetActive(false);
         }
         else if (isRendered == false)
         {
-            objectsToUnrender1.SetActive(true);
+            objectsToUnrender.SetActive(true);
             objectsToUnrender2.SetActive(true);
+            objectsToUnrender3.SetActive(true);
         }
     }
 
