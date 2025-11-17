@@ -91,7 +91,8 @@ public class Enemy : MonoBehaviour
     {
         if ( died == true )
         {
-           // Animator.Play("th");
+            DeathDrops();
+            // Animator.Play("th");
         }
         health = Mathf.Clamp01(health);
 
@@ -126,8 +127,10 @@ public class Enemy : MonoBehaviour
         }
 
         //death
-        if (health <= 0 && !died) {
+        if (health <= 0 && !died)
+        {
             died = true;
+           
 
             ghost.transform.SetParent(null); //unparent
             ghost.SetActive(true);
@@ -152,6 +155,13 @@ public class Enemy : MonoBehaviour
         #region ANIMATION
         movementBlend.Update();
         #endregion
+    }
+    public void DeathDrops()
+    {
+        Debug.Log("0");
+        GetComponent<materialDrop>().triggered = true;
+        
+           
     }
 }
 //alex this breaks the build
